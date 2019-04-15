@@ -3,14 +3,22 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 /**** Configuration ****/
-const appName = "Foobar";
+const appName = "Stackoverflow";
 const port = (process.env.PORT || 8080);
 const app = express();
 app.use(bodyParser.json()); // Parse JSON from the request body
 app.use(morgan('combined')); // Log all requests to the console
 app.use(express.static(path.join(__dirname, '../build')));
+
+mongoose.connect('mongodb://localhost/test');
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'console error:'));
+db.once('open', function () {
+    console.log('We are connected!');
+});
 
 // Additional headers for the response to avoid trigger CORS security
 // errors in the browser
@@ -34,6 +42,7 @@ app.use((req, res, next) => {
 
 /**** Routes ****/
 app.get('/api/hello', (req, res) => res.json({msg: "Hello from the API"}));
+
 
 /**** Reroute all unknown requests to the React index.html ****/
 app.get('/*', (req, res) => {
