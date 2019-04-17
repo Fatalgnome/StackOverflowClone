@@ -13,7 +13,7 @@ app.use(bodyParser.json()); // Parse JSON from the request body
 app.use(morgan('combined')); // Log all requests to the console
 app.use(express.static(path.join(__dirname, '../build')));
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost:27017/Stackoverflow');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'console error:'));
 db.once('open', function () {
@@ -40,13 +40,50 @@ app.use((req, res, next) => {
     }
 });
 
+let questionSchema = new mongoose.Schema(
+    {
+        title: String,
+        description: String
+    });
+
+const Question = mongoose.model('Question', questionSchema);
+
 /**** Routes ****/
 app.get('/api/hello', (req, res) => res.json({msg: "Hello from the API"}));
+
+app.get('/question', (req,res) =>
+{
+    Question.find((er, docs)=>{
+        res.send(docs);
+    });
+});
+
+app.get('/question/:id',(req,res) =>{
+    res.json({ msg: `You have sent this id: ${req.params.id}`});
+});
 
 
 /**** Reroute all unknown requests to the React index.html ****/
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
+app.post('/api/question', (req,res) =>
+{
+
+    let newQuestion = new Question({
+            title: req.body.title,
+            description: req.body.description
+    });
+
+    newQuestion.save(function(err, question)
+    {
+        if(err){return console.log(err);}
+        else{console.log("Question Saved", question);}
+    });
+    res.json({msg: `You have posted this data ${newQuestion}`});
+    res.send();
+
 });
 
 /**** Start! ****/

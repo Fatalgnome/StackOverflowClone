@@ -6,7 +6,7 @@ export default class AddQuestion extends Component {
 
         this.state = {
             inputTitle: "",
-            inputDescr:""
+            inputDescription:""
         };
 
         this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -22,13 +22,17 @@ export default class AddQuestion extends Component {
 
     onChangeDescription(event) {
         this.setState({
-            inputDescr: event.target.value
+            inputDescription: event.target.value
         });
     }
 
     handleInput(event) {
         event.preventDefault();
-        this.props.addQuestion(this.state.inputTitle, this.state.inputDescr);
+        this.props.addQuestion(this.state.inputTitle, this.state.inputDescription);
+        this.setState({
+            inputTitle:"",
+            inputDescr: ""
+        });
     }
 
     render() {

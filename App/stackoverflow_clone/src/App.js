@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import AddQuestion from "./AddQuestion";
+import List from "./List";
 
 class App extends Component
 {
@@ -42,11 +43,11 @@ class App extends Component
   {
     let newQuestion = {
         title: title,
-        description: description,
-        votes: 0
+        description: description
     };
-
-      fetch(`${this.API_URL}/question`,
+    console.log(newQuestion);
+      console.log(JSON.stringify(newQuestion));
+      fetch(`${this.API_URL}/api/question`,
           {
               method: 'POST',
               body: JSON.stringify(newQuestion),
@@ -65,9 +66,9 @@ class App extends Component
     return (
       <div className="App">
           <h1>Stack Overflow</h1>
+          <List questions={this.state.questions}/>
           <h4>Ask question here:</h4>
-          <br/>
-          <AddQuestion />
+          <AddQuestion addQuestion={this.addQuestion}/>
       </div>
     );
   }

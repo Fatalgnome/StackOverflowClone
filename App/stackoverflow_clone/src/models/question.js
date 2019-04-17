@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema(
     {
         title: String,
-        description: String,
-        votes: Number
+        description: String
     });
 
 const Question = mongoose.model('Question', questionSchema);
