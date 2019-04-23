@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import AddQuestion from "./AddQuestion";
 import List from "./List";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Question from "./models/question";
 
 class App extends Component
 {
@@ -12,14 +14,20 @@ class App extends Component
 
     this.state ={
       questions: []
+
     };
     this.addQuestion = this.addQuestion.bind(this);
   }
 
-  getData()
-  {
+    componentDidMount()
+    {
+    console.log("App component has mounted");
+    this.getData();
+    }
+
+    getData()
+    {
     console.log("Getting Data");
-    //TODO: Get data from API
     fetch(`${this.API_URL}/question`)
         .then((response) =>
         {
@@ -28,16 +36,16 @@ class App extends Component
         })
         .then((questions) =>
         {
-          this.setState(
-              {
-                  questions: questions
-              });
+            this.setState({
+                questions: questions
+            });
+            console.log(questions);
         })
         .catch(error =>
         {
           console.error(error);
-        })
-  }
+        });
+    }
 
   addQuestion(title, description)
   {
@@ -62,14 +70,32 @@ class App extends Component
               this.getData()
           })
   }
+
+    getQuestionFromId(id)
+    {
+        return this.state.questions.find((elm) => elm._id === id);
+    }
   render() {
     return (
-      <div className="App">
+      <Router>
+        <div className="container">
           <h1>Stack Overflow</h1>
-          <List questions={this.state.questions}/>
+            <Switch>
+            <Route exact path="/"
+                render={(props) => <List {...props}
+                                        questions={this.state.questions}/>}
+            />
+
+            <Route exact path="/question/:id"
+                render={(props) => <Question {...props}
+                                       question={this.getQuestionFromId(props.match.params._id)}
+                                        id={props.match.params.id}/>}
+            />
+            </Switch>
           <h4>Ask question here:</h4>
           <AddQuestion addQuestion={this.addQuestion}/>
-      </div>
+        </div>
+      </Router>
     );
   }
 }

@@ -1,14 +1,22 @@
 import React, {Component} from 'react';
 import Question from "./Question";
 
+import {Link} from "react-router-dom";
+
 export default class List extends Component {
 
+
+    constructor(props){
+        super(props);
+
+    }
     render() {
         let items = this.props.questions.map((question) =>
-            <Question   title={question.title}
-                        description={question.description}
-            />);
-
+            <Link to={`/question/${question._id}`}>
+                <li>
+                    <p>{question.title}</p>
+                </li>
+            </Link>);
         return (
             <div>
                 <div className="card">
@@ -16,9 +24,9 @@ export default class List extends Component {
                         The list
                     </div>
                     <div className="card-body">
-                        <ol className="list-group" id="itemList">
+                        <ul className="list-group" id="itemList">
                             {items}
-                        </ol>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -40,16 +40,21 @@ app.use((req, res, next) => {
     }
 });
 
+let answerSchema = new mongoose.Schema(
+    {
+        content: String,
+        votes: Number
+    });
+
 let questionSchema = new mongoose.Schema(
     {
         title: String,
-        description: String
+        description: String,
+        answers: [answerSchema]
     });
 
+const Answer = mongoose.model('Answer', answerSchema);
 const Question = mongoose.model('Question', questionSchema);
-
-/**** Routes ****/
-app.get('/api/hello', (req, res) => res.json({msg: "Hello from the API"}));
 
 app.get('/question', (req,res) =>
 {
@@ -59,7 +64,15 @@ app.get('/question', (req,res) =>
 });
 
 app.get('/question/:id',(req,res) =>{
-    res.json({ msg: `You have sent this id: ${req.params.id}`});
+    Question.findOne({
+        _id: req.params.id}, (err, question) =>{
+        if(err) {
+            console.log(err);
+        }
+        else {
+        res.json(question)
+        }
+    })
 });
 
 
@@ -68,9 +81,22 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+app.post('/api/comment/:id', (req,res) =>
+{
+   let newComment = new Answer({
+       content: req.body.content,
+       votes: 0
+   });
+
+    Question.findOne({
+        _id: req.params._id}, (err, question) =>{
+        question.answers.push(newComment);
+        question.save();
+    })
+});
+
 app.post('/api/question', (req,res) =>
 {
-
     let newQuestion = new Question({
             title: req.body.title,
             description: req.body.description

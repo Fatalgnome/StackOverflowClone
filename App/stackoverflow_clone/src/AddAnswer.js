@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 
-export default class AddQuestion extends Component {
+export default class AddAnswer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            inputTitle: "",
-            inputDescription:""
+            inputContent:""
         };
 
         this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -20,18 +19,17 @@ export default class AddQuestion extends Component {
         });
     }
 
-    onChangeDescription(event) {
+    onChangeContent(event) {
         this.setState({
-            inputDescription: event.target.value
+            inputContent: event.target.value
         });
     }
 
     handleInput(event) {
         event.preventDefault();
-        this.props.addQuestion(this.state.inputTitle, this.state.inputDescription);
+        this.props.addQuestion(this.state.inputTitle, this.state.inputContent);
         this.setState({
-            inputTitle:"",
-            inputDescription: ""
+            inputContent: ""
         });
     }
 
@@ -40,22 +38,15 @@ export default class AddQuestion extends Component {
             <div className="card">
                 <div className="card-body">
                     <form>
-                        <div className="form-group">
-                            <input type="text" className="form-control" id="itemTitle"
-                                   placeholder="Title"
-                                   onChange={this.onChangeTitle}
-                            />
-                            <br/>
                             <div className="form-group">
                                 <label htmlFor="itemDescription">Question Description</label>
                                 <br/>
                                 <input type="text" className="form-control" id="itemDescription"
                                        placeholder="Description"
-                                       onChange={this.onChangeDescription}/>
+                                       onChange={this.onChangeContent}/>
                             </div>
-                        </div>
                         <button onClick={this.handleInput}
-                                type="submit" id="submitItemBtn" className="btn btn-primary">Add Question
+                                type="submit" id="submitItemBtn" className="btn btn-primary">Add Answer
                         </button>
                     </form>
                 </div>
