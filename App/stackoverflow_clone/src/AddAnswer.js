@@ -8,16 +8,10 @@ export default class AddAnswer extends Component {
             inputContent:""
         };
 
-        this.onChangeTitle = this.onChangeTitle.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this)
+        this.onChangeContent = this.onChangeContent.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }
 
-    onChangeTitle(event) {
-        this.setState({
-            inputTitle: event.target.value
-        });
-    }
 
     onChangeContent(event) {
         this.setState({
@@ -27,7 +21,7 @@ export default class AddAnswer extends Component {
 
     handleInput(event) {
         event.preventDefault();
-        this.props.addQuestion(this.state.inputTitle, this.state.inputContent);
+        this.props.addAnswer(this.props.id, this.state.inputContent);
         this.setState({
             inputContent: ""
         });
@@ -39,10 +33,10 @@ export default class AddAnswer extends Component {
                 <div className="card-body">
                     <form>
                             <div className="form-group">
-                                <label htmlFor="itemDescription">Question Description</label>
+                                <label htmlFor="itemDescription">Add Comment</label>
                                 <br/>
                                 <input type="text" className="form-control" id="itemDescription"
-                                       placeholder="Description"
+                                       placeholder="Comment"
                                        onChange={this.onChangeContent}/>
                             </div>
                         <button onClick={this.handleInput}

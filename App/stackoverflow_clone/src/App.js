@@ -16,6 +16,7 @@ class App extends Component
 
     };
     this.addQuestion = this.addQuestion.bind(this);
+    this.addAnswer = this.addAnswer.bind(this);
   }
 
     componentDidMount()
@@ -70,6 +71,27 @@ class App extends Component
           })
   }
 
+  addAnswer(id,comment)
+  {
+      let newAnswer =
+          {
+              content: comment
+          };
+      fetch(`${this.API_URL}/api/question/comment/${id}`,
+          {
+              method: 'POST',
+              body: JSON.stringify(newAnswer),
+              headers: {"Content-type": "application/json; charset=UTF-8"}
+          })
+          .then(response => response.json())
+          .then(json =>
+          {
+              console.log(json);
+              console.log(newAnswer);
+              window.location.reload();
+          })
+  }
+
     getQuestionFromId(id)
     {
         return this.state.questions.find((elm) => elm._id === id);
@@ -90,7 +112,8 @@ class App extends Component
             <Route exact path="/question/:id"
                 render={(props) => <Question {...props}
                                              question={this.getQuestionFromId(props.match.params._id)}
-                                             id={props.match.params.id}/>}
+                                             id={props.match.params.id}
+                                             addAnswer={this.addAnswer}/>}
             />
             </Switch>
         </div>

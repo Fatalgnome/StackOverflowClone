@@ -9,8 +9,7 @@ export default class Answer extends Component {
     render() {
         return (
             <li className="list-group-item">
-                <p>Title: {this.props.title}</p>
-                <p>Description: {this.props.description}</p>
+                <p>Content: {this.props.description}</p>
             </li>
         );
     }

@@ -81,18 +81,30 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
-app.post('/api/comment/:id', (req,res) =>
+app.post('/api/question/comment/:id', (req, res) =>
 {
-   let newComment = new Answer({
+    console.log(req.params)
+   let newComment = {
        content: req.body.content,
        votes: 0
-   });
-
+   };
     Question.findOne({
-        _id: req.params._id}, (err, question) =>{
-        question.answers.push(newComment);
-        question.save();
+        _id: req.params.id}, (err, question) =>{
+        if(err) {
+            console.log(err);
+        }
+        else {
+
+            console.log(question);
+            question.answers.push(newComment);
+            question.save();
+            console.log("Answer Saved", newComment)
+        }
     })
+
+
+    res.json({msg: `You have posted this data ${newComment.content}`});
+    res.send();
 });
 
 app.post('/api/question', (req,res) =>
