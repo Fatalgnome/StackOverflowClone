@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import AddQuestion from "./AddQuestion";
 import List from "./List";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Question from "./models/question";
+import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+import Question from "./Question";
 
 class App extends Component
 {
@@ -75,25 +74,25 @@ class App extends Component
     {
         return this.state.questions.find((elm) => elm._id === id);
     }
+/**/
   render() {
     return (
       <Router>
         <div className="container">
-          <h1>Stack Overflow</h1>
+            <Link to={`/`}><h1>Stack Overflow</h1></Link>
             <Switch>
             <Route exact path="/"
                 render={(props) => <List {...props}
-                                        questions={this.state.questions}/>}
+                                        questions={this.state.questions}
+                                        addQuestion={this.addQuestion}/>}
             />
 
             <Route exact path="/question/:id"
                 render={(props) => <Question {...props}
-                                       question={this.getQuestionFromId(props.match.params._id)}
-                                        id={props.match.params.id}/>}
+                                             question={this.getQuestionFromId(props.match.params._id)}
+                                             id={props.match.params.id}/>}
             />
             </Switch>
-          <h4>Ask question here:</h4>
-          <AddQuestion addQuestion={this.addQuestion}/>
         </div>
       </Router>
     );

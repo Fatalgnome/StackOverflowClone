@@ -45,7 +45,6 @@ class Question extends Component {
                             <p>Description: {this.state.question.description}</p>
                         </div>
                     </div>;
-
             }
             return content;
         }

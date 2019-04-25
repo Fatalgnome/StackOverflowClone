@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import Question from "./Question";
-
-import {Link} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
+import AddQuestion from "./AddQuestion";
 
 export default class List extends Component {
 
@@ -20,16 +19,16 @@ export default class List extends Component {
         return (
             <div>
                 <div className="card">
-                    <div className="card-header">
-                        The list
-                    </div>
                     <div className="card-body">
                         <ul className="list-group" id="itemList">
                             {items}
                         </ul>
                     </div>
                 </div>
+                <h4>Ask question here:</h4>
+                <AddQuestion addQuestion={this.props.addQuestion}/>
             </div>
+
         );
     }
 }
