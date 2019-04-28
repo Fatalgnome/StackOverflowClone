@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Answer from "./Answer";
+import AnswerList from "./AnswerList";
 import AddAnswer from "./AddAnswer";
 
 class Question extends Component {
@@ -12,7 +13,7 @@ class Question extends Component {
         this.state=
             {
                 question: "",
-                answer: ""
+                answer: []
             };
 
         fetch(`${this.API_URL}/question/${props.match.params.id}`)
@@ -21,12 +22,12 @@ class Question extends Component {
                 console.log(response);
                 return response.json();
             })
-            .then((questions) =>
+            .then((questions, answer) =>
             {
                 this.setState({
-                    question: questions
+                    question: questions,
+                    answer: answer
                 });
-                console.log(questions + "foiaoifjaiefoijaoefij");
             })
             .catch(error =>
             {
@@ -36,10 +37,9 @@ class Question extends Component {
 
 
     render() {
-            let content = "LOAD";
-
-            if(this.state.question)
-            {
+        let content = "LOAD";
+        if(this.state.question)
+        {
                 let question = this.state.question;
                 console.log(question);
                 content =
@@ -48,11 +48,11 @@ class Question extends Component {
                             <h3>{this.state.question.title}</h3>
                             <p>Question: {this.state.question.description}</p>
                         </div>
-                        <div>
-                            <AnswerList answers={this.state.answers}/>
-                        </div>
                         <AddAnswer id={this.props.id}
                                    addAnswer={this.props.addAnswer}/>
+
+                        <AnswerList answers={this.state.question.answers}/>
+
                     </div>;
             }
             return content;

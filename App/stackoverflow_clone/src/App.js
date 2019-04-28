@@ -113,7 +113,9 @@ class App extends Component
                 render={(props) => <Question {...props}
                                              question={this.getQuestionFromId(props.match.params._id)}
                                              id={props.match.params.id}
-                                             addAnswer={this.addAnswer}/>}
+                                             addAnswer={this.addAnswer}
+                                             questions={this.state.questions}
+                />}
             />
             </Switch>
         </div>

@@ -70,7 +70,8 @@ app.get('/question/:id',(req,res) =>{
             console.log(err);
         }
         else {
-        res.json(question)
+        res.json(question);
+        console.log(question, "app");
         }
     })
 });
@@ -83,7 +84,7 @@ app.get('/*', (req, res) => {
 
 app.post('/api/question/comment/:id', (req, res) =>
 {
-    console.log(req.params)
+    console.log(req.params);
    let newComment = {
        content: req.body.content,
        votes: 0
@@ -100,7 +101,7 @@ app.post('/api/question/comment/:id', (req, res) =>
             question.save();
             console.log("Answer Saved", newComment)
         }
-    })
+    });
 
 
     res.json({msg: `You have posted this data ${newComment.content}`});
