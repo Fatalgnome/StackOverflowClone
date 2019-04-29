@@ -4,7 +4,7 @@ import AddAnswer from "./AddAnswer";
 
 class Question extends Component {
 
-    API_URL = 'http://localhost:8080';
+    API_URL = process.env.REACT_APP_API_URL;
     constructor(props)
     {
         super(props);

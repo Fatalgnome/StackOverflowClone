@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 export default class Answer extends Component {
+    API_URL = process.env.REACT_APP_API_URL;
 
     constructor(props)
     {
@@ -12,7 +13,7 @@ export default class Answer extends Component {
     handleInputPlus(event)
     {
         event.preventDefault();
-        fetch(`http://localhost:8080/api/question/${this.props.questionId}/comment/${event.target.className}`,
+        fetch(`${this.API_URL}/question/${this.props.questionId}/comment/${event.target.className}`,
         {
         method: 'PUT',
         body: JSON.stringify(
@@ -30,7 +31,7 @@ export default class Answer extends Component {
     handleInputMinus(event)
     {
         event.preventDefault();
-        fetch(`http://localhost:8080/api/question/${this.props.questionId}/comment/${event.target.className}`,
+        fetch(`${this.API_URL}/question/${this.props.questionId}/comment/${event.target.className}`,
             {
                 method: 'PUT',
                 body: JSON.stringify(

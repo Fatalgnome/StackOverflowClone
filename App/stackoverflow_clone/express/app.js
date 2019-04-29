@@ -13,7 +13,7 @@ app.use(bodyParser.json()); // Parse JSON from the request body
 app.use(morgan('combined')); // Log all requests to the console
 app.use(express.static(path.join(__dirname, '../build')));
 
-mongoose.connect('mongodb://localhost:27017/Stackoverflow');
+mongoose.connect('mongodb+srv://dbadmin:UXGsPBy3YpKcXrjn@cluster0-1evna.azure.mongodb.net/question?retryWrites=true');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'console error:'));
 db.once('open', function () {
@@ -56,14 +56,14 @@ let questionSchema = new mongoose.Schema(
 const Answer = mongoose.model('Answer', answerSchema);
 const Question = mongoose.model('Question', questionSchema);
 
-app.get('/question', (req,res) =>
+app.get('/api/question', (req,res) =>
 {
     Question.find((er, docs)=>{
         res.send(docs);
     });
 });
 
-app.get('/question/:id',(req,res) =>{
+app.get('/api/question/:id',(req,res) =>{
     Question.findOne({
         _id: req.params.id}, (err, question) =>{
         if(err) {

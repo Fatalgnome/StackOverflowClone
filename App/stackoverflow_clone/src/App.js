@@ -6,7 +6,7 @@ import Question from "./Question";
 
 class App extends Component
 {
-  API_URL = 'http://localhost:8080';
+    API_URL = process.env.REACT_APP_API_URL;
   constructor(props)
   {
     super(props);
@@ -17,6 +17,7 @@ class App extends Component
     };
     this.addQuestion = this.addQuestion.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
     componentDidMount()
@@ -54,7 +55,7 @@ class App extends Component
         description: description
     };
       console.log(JSON.stringify(newQuestion));
-      fetch(`${this.API_URL}/api/question`,
+      fetch(`${this.API_URL}/question`,
           {
               method: 'POST',
               body: JSON.stringify(newQuestion),
@@ -75,7 +76,7 @@ class App extends Component
           {
               content: comment
           };
-      fetch(`${this.API_URL}/api/question/comment/${id}`,
+      fetch(`${this.API_URL}/question/comment/${id}`,
           {
               method: 'POST',
               body: JSON.stringify(newAnswer),
