@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Answer from "./Answer";
 import AnswerList from "./AnswerList";
 import AddAnswer from "./AddAnswer";
 
@@ -13,7 +12,7 @@ class Question extends Component {
         this.state=
             {
                 question: "",
-                answer: []
+                answer: ""
             };
 
         fetch(`${this.API_URL}/question/${props.match.params.id}`)
@@ -51,7 +50,8 @@ class Question extends Component {
                         <AddAnswer id={this.props.id}
                                    addAnswer={this.props.addAnswer}/>
 
-                        <AnswerList answers={this.state.question.answers}/>
+                        <AnswerList answers={this.state.question.answers}
+                                    id={this.props.id}/>
 
                     </div>;
             }

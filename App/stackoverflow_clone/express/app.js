@@ -125,6 +125,15 @@ app.post('/api/question', (req,res) =>
 
 });
 
+app.put('/api/question/:id/comment/:commentId', (req, res) => {
+    Question.findOne({ _id: req.params.id }).exec(function (err, question) {
+        question.answers.find((elem) => elem._id == req.params.commentId).votes = req.body.votes;
+        question.save();
+    })
+    res.json({msg: "You have posted this data" + req.body.votes});
+    res.send();
+});
+
 /**** Start! ****/
 app.listen(port, () => console.log(`${appName} API running on port ${port}!`));
 

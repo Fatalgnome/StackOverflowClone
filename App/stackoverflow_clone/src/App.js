@@ -53,7 +53,6 @@ class App extends Component
         title: title,
         description: description
     };
-    console.log(newQuestion);
       console.log(JSON.stringify(newQuestion));
       fetch(`${this.API_URL}/api/question`,
           {
@@ -61,7 +60,6 @@ class App extends Component
               body: JSON.stringify(newQuestion),
               headers: {"Content-type": "application/json; charset=UTF-8"}
           })
-
           .then(response => response.json())
           .then(json =>
           {
@@ -114,7 +112,6 @@ class App extends Component
                                              question={this.getQuestionFromId(props.match.params._id)}
                                              id={props.match.params.id}
                                              addAnswer={this.addAnswer}
-                                             questions={this.state.questions}
                 />}
             />
             </Switch>

@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
-import {Link, Route, Switch} from "react-router-dom";
+import {Link} from "react-router-dom";
 import AddQuestion from "./AddQuestion";
 
 export default class List extends Component {
 
 
-    constructor(props){
-        super(props);
-
-    }
     render() {
         let items = this.props.questions.map((question) =>
             <Link to={`/question/${question._id}`}>

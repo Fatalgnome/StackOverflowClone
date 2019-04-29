@@ -29,10 +29,6 @@ export default class AddQuestion extends Component {
     handleInput(event) {
         event.preventDefault();
         this.props.addQuestion(this.state.inputTitle, this.state.inputDescription);
-        this.setState({
-            inputTitle:"",
-            inputDescription: ""
-        });
     }
 
     render() {
@@ -47,7 +43,6 @@ export default class AddQuestion extends Component {
                             />
                             <br/>
                             <div className="form-group">
-                                <label htmlFor="itemDescription">Question Description</label>
                                 <br/>
                                 <input type="text" className="form-control" id="itemDescription"
                                        placeholder="Description"
